@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empower People Incident Reporting & Family Reconnection Portal</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.45rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+      --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --space-16: 4rem;
+      --color-bg: #fbf8f1; --color-surface: #ffffff; --color-surface-2:#f2ede1; --color-border:#d8cfb8; --color-divider:#e3dcc9;
+      --color-text:#1c2333; --color-text-muted:#5c5f6c; --color-text-faint:#8a8d97; --color-text-inverse:#ffffff;
+      --color-primary:#1a3a8f; --color-primary-hover:#12285f; --color-primary-highlight:#dde4f7;
+      --color-warning:#d8590f; --color-error:#c62148; --color-success:#2f8f2a;
+      --accent-1:#1a3a8f; --accent-2:#2f8f2a; --accent-3:#0f7f6a; --accent-4:#3b8f10;
+      --accent-5:#3a5fc2; --accent-6:#1fae54; --accent-7:#145c99; --accent-8:#6a9e1f;
+      --radius-sm:0.5rem; --radius-md:0.75rem; --radius-lg:1rem; --radius-xl:1.25rem; --radius-full:9999px;
+      --shadow-sm:0 1px 2px rgba(26,24,20,.06); --shadow-md:0 8px 24px rgba(26,24,20,.09); --shadow-lg:0 20px 50px rgba(26,24,20,.12);
+      --transition:180ms cubic-bezier(0.16,1,0.3,1);
+      --font-body:'Satoshi', system-ui, sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg:#12151f; --color-surface:#181c29; --color-surface-2:#1f2433; --color-border:#39415a; --color-divider:#2a3040;
+      --color-text:#eef0f7; --color-text-muted:#c2c6d6; --color-text-faint:#8d92a8; --color-text-inverse:#12151f;
+      --color-primary:#7d9bf0; --color-primary-hover:#9db1f5; --color-primary-highlight:#233257;
+      --color-warning:#ff9d52; --color-error:#ff6b8f; --color-success:#6fd965;
+      --accent-1:#7d9bf0; --accent-2:#6fd965; --accent-3:#4fd6bf; --accent-4:#9ee05a;
+      --accent-5:#a9bdf7; --accent-6:#5fe28c; --accent-7:#6fb8ff; --accent-8:#c3e05a;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.25); --shadow-md:0 8px 24px rgba(0,0,0,.35); --shadow-lg:0 20px 50px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-text-size-adjust:none;text-size-adjust:none;scroll-behavior:smooth}
+    body{font-family:var(--font-body);font-size:var(--text-base);line-height:1.55;background:linear-gradient(160deg,var(--color-bg),var(--color-surface-2) 60%,color-mix(in srgb,var(--color-primary) 6%, var(--color-surface-2)));color:var(--color-text);min-height:100dvh}
+    img,svg{display:block;max-width:100%} button,input,select,textarea{font:inherit;color:inherit}
+    a,button,input,select,textarea{transition:background var(--transition),border-color var(--transition),color var(--transition),box-shadow var(--transition),transform var(--transition)}
+    :focus-visible{outline:3px solid var(--color-primary);outline-offset:2px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .app-shell{max-width:1100px;margin:0 auto;padding:var(--space-4)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4) 0 var(--space-6)}
+    .brand{display:flex;align-items:center;gap:var(--space-3)}
+    .brand-mark{width:auto;height:44px;object-fit:contain}
+    .logo-replacement-valid{display:block;width:210px;height:64px;object-fit:cover;object-position:center 48%;border-radius:var(--radius-sm)}
+    .brand-text strong{display:block;font-size:var(--text-sm);letter-spacing:.02em}
+    .brand-text span{display:block;color:var(--color-text-muted);font-size:var(--text-xs)}
+    .header-actions{display:flex;align-items:center;gap:var(--space-2)}
+    .language-switcher{min-height:44px;max-width:170px;padding:.55rem 2rem .55rem .8rem;border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);border-radius:var(--radius-full);background:var(--color-surface);box-shadow:var(--shadow-sm);font-size:var(--text-sm);font-weight:700;cursor:pointer}
+    .theme-btn{min-width:44px;min-height:44px;border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent);border-radius:var(--radius-full);display:grid;place-items:center;background:var(--color-surface);box-shadow:var(--shadow-sm)}
+    .hero{background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 10%, transparent);box-shadow:var(--shadow-lg);border-radius:var(--radius-xl);padding:clamp(var(--space-5),4vw,var(--space-10));display:grid;gap:var(--space-6)}
+    .hero h1{font-size:var(--text-xl);line-height:1.12;max-width:18ch}
+    .hero p{max-width:72ch;color:var(--color-text-muted)}
+    .alert{background:color-mix(in srgb,var(--color-warning) 8%, var(--color-surface));border:1px solid color-mix(in srgb,var(--color-warning) 28%, transparent);color:var(--color-text);padding:var(--space-4);border-radius:var(--radius-lg)}
+    .layout{display:grid;grid-template-columns:1fr;gap:var(--space-6);padding:var(--space-6) 0 var(--space-12)}
+    .panel{background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 9%, transparent);border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}
+    .panel-header{padding:var(--space-5);border-bottom:1px solid var(--color-divider);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--space-3)}
+    .panel-body{padding:var(--space-5)}
+    .muted{color:var(--color-text-muted)}
+    .small{font-size:var(--text-sm)}
+    .tiny{font-size:var(--text-xs)}
+    .progress-wrap{display:grid;gap:var(--space-3)}
+    .progress-meta{display:flex;justify-content:space-between;gap:var(--space-4);align-items:center}
+    .progress-bar{height:12px;background:var(--color-surface-2);border-radius:var(--radius-full);overflow:hidden;border:1px solid color-mix(in srgb,var(--color-text) 8%, transparent)}
+    .progress-fill{height:100%;width:6%;background:linear-gradient(90deg,var(--color-primary),color-mix(in srgb,var(--color-primary) 60%, white));border-radius:inherit}
+    .step-labels{display:flex;gap:var(--space-2);flex-wrap:wrap}
+    .step-pill{font-size:var(--text-xs);padding:0.45rem 0.75rem;border-radius:var(--radius-full);background:var(--color-surface-2);color:var(--color-text-muted)}
+    .step-pill.active{background:var(--color-primary-highlight);color:var(--color-primary);font-weight:700}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--space-4)}
+    .card-option{border:1px solid color-mix(in srgb,var(--color-text) 12%, transparent);border-top:4px solid var(--card-accent, var(--color-primary));background:var(--color-surface);border-radius:var(--radius-lg);padding:var(--space-5);text-align:left;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-3)}
+    .card-option:hover,.card-option:focus-visible{border-color:color-mix(in srgb,var(--card-accent, var(--color-primary)) 55%, transparent);border-top-color:var(--card-accent, var(--color-primary));box-shadow:0 0 0 4px color-mix(in srgb,var(--card-accent, var(--color-primary)) 16%, transparent);transform:translateY(-1px)}
+    .card-option.selected{background:color-mix(in srgb,var(--card-accent, var(--color-primary)) 10%, var(--color-surface));border-color:var(--card-accent, var(--color-primary))}
+    .card-option .icon{width:46px;height:46px;border-radius:var(--radius-md);display:grid;place-items:center;background:color-mix(in srgb,var(--card-accent, var(--color-primary)) 18%, var(--color-surface));color:var(--card-accent, var(--color-primary));font-size:1.2rem;font-weight:700}
+    .section-block{display:none;gap:var(--space-5)}
+    .section-block.active{display:grid}
+    .section-title{display:grid;gap:var(--space-2)}
+    .section-title h2{font-size:var(--text-lg);line-height:1.2}
+    .form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-4)}
+    .field{grid-column:span 12;display:grid;gap:var(--space-2)}
+    .field.half{grid-column:span 6}
+    .field.third{grid-column:span 4}
+    label{font-size:var(--text-sm);font-weight:700}
+    .required::after{content:' *';color:var(--color-error)}
+    input,select,textarea{width:100%;min-height:48px;padding:0.9rem 1rem;border-radius:var(--radius-md);border:1px solid color-mix(in srgb,var(--color-text) 14%, transparent);background:var(--color-surface-2)}
+    textarea{min-height:120px;resize:vertical}
+    input[type="checkbox"],input[type="radio"]{width:1.1rem;height:1.1rem;min-height:auto;padding:0}
+    .choice-grid,.checkbox-grid{display:grid;gap:var(--space-3);grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr))}
+    .choice,.check{display:flex;align-items:flex-start;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-md);border:1px solid color-mix(in srgb,var(--color-text) 12%, transparent);background:var(--color-surface-2)}
+    .fieldset{border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-5);display:grid;gap:var(--space-4)}
+    .fieldset legend{padding:0 var(--space-2);font-weight:700;font-size:var(--text-sm)}
+    .actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:space-between;align-items:center;padding-top:var(--space-2)}
+    .btn-group{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+    .btn{min-height:48px;padding:0.85rem 1.1rem;border-radius:var(--radius-full);border:1px solid transparent;font-size:var(--text-sm);font-weight:700}
+    .btn-primary{background:var(--color-primary);color:var(--color-text-inverse);box-shadow:var(--shadow-sm)}
+    .btn-primary:hover{background:var(--color-primary-hover)}
+    .btn-secondary{background:var(--color-surface-2);border-color:color-mix(in srgb,var(--color-text) 14%, transparent)}
+    .btn-ghost{background:transparent;color:var(--color-primary);border-color:color-mix(in srgb,var(--color-primary) 22%, transparent)}
+    .status{padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);background:var(--color-primary-highlight);color:var(--color-primary);font-size:var(--text-sm);font-weight:700}
+    .status-group{display:flex;flex-wrap:wrap;gap:0;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm)}
+    .status-group .status{border-radius:0}
+    .status-label{background:var(--color-text);color:var(--color-text-inverse);font-weight:600;display:flex;align-items:center}
+    .status-value{background:var(--color-primary-highlight);color:var(--color-primary);font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;letter-spacing:.02em}
+    .intro-note,.privacy-box,.confirm-box{padding:var(--space-4);background:var(--color-surface-2);border:1px solid color-mix(in srgb,var(--color-text) 10%, transparent);border-radius:var(--radius-lg)}
+    .signature{font-family:cursive;font-size:1.4rem;color:var(--color-primary);padding-top:var(--space-2)}
+    .hidden{display:none !important}
+    .footer-note{padding:var(--space-4) 0;color:var(--color-text-faint);font-size:var(--text-xs)}
+    @media (max-width: 760px){
+      .field.half,.field.third{grid-column:span 12}
+      .panel-header,.actions{align-items:flex-start}
+      .hero h1{max-width:100%}
+      .topbar{align-items:flex-start}
+      .logo-replacement-valid{width:170px;height:56px}
+      .header-actions{flex-wrap:wrap;justify-content:flex-end}
+      .language-switcher{max-width:145px}
+    }
+    @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto;transition:none!important}}
+  </style>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <header class="topbar" aria-label="Portal header">
+      <div class="brand">
+        <img class="brand-mark logo-replacement-valid" src="logo.png" alt="Empower People logo" />
+        <div class="brand-text">
+          <strong>Empower People</strong>
+          <span>Incident Reporting & Family Reconnection Portal</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <label class="sr-only" for="languageSwitcher">Choose your language</label>
+        <select id="languageSwitcher" class="language-switcher" aria-describedby="languageHelp">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="bn">বাংলা (Bengali)</option>
+          <option value="mr">मराठी (Marathi)</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="ur">اردو (Urdu)</option>
+        </select>
+        <span id="languageHelp" class="sr-only">Selecting a language translates the portal. You can switch back to English at any time.</span>
+        <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch to dark mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="layout">
+      <section class="hero" aria-labelledby="portal-title">
+        <div>
+          <h1 id="portal-title">Empower People – Incident Reporting & Family Reconnection Portal</h1>
+        </div>
+        <p>Welcome.</p>
+        <p>This secure portal enables individuals, families, community members, NGOs, and authorities to report missing persons, found persons, suspected trafficking, forced marriage, and request assistance with family reunification.</p>
+        <p>Information submitted through this portal will be treated confidentially and used only for case management, referrals, and humanitarian support.</p>
+        <div class="alert" role="alert">Submission of this form does not replace reporting to the Police. If someone is in immediate danger, contact the nearest Police Station or Dial 112 immediately.</div>
+      </section>
+
+      <section class="panel" aria-labelledby="form-heading">
+        <div class="panel-header">
+          <div>
+            <h2 id="form-heading" class="section-heading">Secure report form</h2>
+            <p class="muted small">Please complete the sections below. Your information stays confidential and helps us respond effectively.</p>
+          </div>
+          <div class="status-group">
+            <span class="status status-label">Case Reference Number</span>
+            <span class="status status-value" id="caseStatus">Generating…</span>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="progress-wrap" aria-label="Form progress">
+            <div class="progress-meta">
+              <strong id="progressText">Step 1 of 4</strong>
+              <span class="muted small" id="workflowName">Choose a workflow</span>
+            </div>
+            <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="step-labels">
+              <span class="step-pill active" data-step-pill="1">1. Select</span>
+              <span class="step-pill" data-step-pill="2">2. Details</span>
+              <span class="step-pill" data-step-pill="3">3. Reporter & consent</span>
+              <span class="step-pill" data-step-pill="4">4. Review</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-body">
+          <form id="portalForm">
+            <div class="section-block active" data-step="1">
+              <div class="section-title">
+                <h2>What would you like to report?</h2>
+                <p class="muted">Choose one option to start the right workflow. Large cards are easier to use on a phone than a dropdown menu.</p>
+              </div>
+              <div class="cards" id="workflowCards"></div>
+              <div class="actions">
+                <p class="tiny muted">Your draft can be saved on this device during this session by using the Save and Continue Later button.</p>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-secondary" id="saveDraftTop">Save and Continue Later</button>
+                  <button type="button" class="btn btn-primary" id="toDetails">Continue</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block" data-step="2">
+              <div class="section-title">
+                <h2 id="detailsHeading">Incident details</h2>
+                <p class="muted" id="detailsIntro">Complete the fields below. Only essential fields should be required.</p>
+              </div>
+              <div id="workflowContainer"></div>
+              <div class="actions">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-secondary" data-nav="prev">Back</button>
+                  <button type="button" class="btn btn-ghost" id="saveDraftMid">Save and Continue Later</button>
+                </div>
+                <button type="button" class="btn btn-primary" data-nav="next">Continue</button>
+              </div>
+            </div>
+
+            <div class="section-block" data-step="3">
+              <div class="section-title">
+                <h2>Reporter, privacy and consent</h2>
+                <p class="muted">These fields appear for every workflow so Empower People can safely follow up and manage the case.</p>
+              </div>
+              <div class="form-grid">
+                <div class="field half"><label for="reporterName" class="required">Reporter name</label><input id="reporterName" name="reporterName" required /></div>
+                <div class="field half"><label for="reporterRelationship">Relationship to case</label><input id="reporterRelationship" name="reporterRelationship" /></div>
+                <div class="field half"><label for="reporterPhone" class="required">Phone</label><input id="reporterPhone" name="reporterPhone" type="tel" required /></div>
+                <div class="field half"><label for="reporterWhatsapp">WhatsApp</label><input id="reporterWhatsapp" name="reporterWhatsapp" type="tel" /></div>
+                <div class="field half"><label for="reporterEmail">Email</label><input id="reporterEmail" name="reporterEmail" type="email" /></div>
+                <div class="field half"><label for="preferredContact">Preferred contact method</label><select id="preferredContact" name="preferredContact"><option value="">Select</option><option>Phone</option><option>WhatsApp</option><option>Email</option><option>No call, message only</option></select></div>
+                <div class="field"><label for="reporterAddress">Address</label><textarea id="reporterAddress" name="reporterAddress"></textarea></div>
+              </div>
+              <div class="privacy-box" style="margin-top:var(--space-5)">
+                <p><strong>Privacy notice.</strong> Information shared in this portal is intended for confidential case management, referrals, family tracing, coordination with services, and humanitarian support.</p>
+              </div>
+              <fieldset class="fieldset" style="margin-top:var(--space-5)">
+                <legend>Consent and declaration</legend>
+                <label class="choice"><input type="checkbox" id="consentBox" required> <span>I confirm that the information provided is true to the best of my knowledge and I consent to Empower People using this information for case management and referrals.</span></label>
+                <div class="form-grid">
+                  <div class="field half"><label for="signatureName" class="required">Electronic signature</label><input id="signatureName" name="signatureName" placeholder="Type full name" required /></div>
+                  <div class="field half"><label for="submissionDate">Submission date</label><input id="submissionDate" name="submissionDate" readonly /></div>
+                </div>
+                <div class="signature" id="signaturePreview" aria-hidden="true"></div>
+              </fieldset>
+              <div class="actions">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-secondary" data-nav="prev">Back</button>
+                  <button type="button" class="btn btn-ghost" id="saveDraftBottom">Save and Continue Later</button>
+                </div>
+                <button type="button" class="btn btn-primary" data-nav="next">Continue</button>
+              </div>
+            </div>
+
+            <div class="section-block" data-step="4">
+              <div class="section-title">
+                <h2>Review and submit</h2>
+                <p class="muted">Check the summary below before submission. Once submitted, our team will review your report and reach out if we need more information.</p>
+              </div>
+              <div class="confirm-box">
+                <div id="reviewSummary"></div>
+                <div style="margin-top:var(--space-5)" class="intro-note">
+                  <p><strong>What happens next:</strong> Your report will be reviewed by the Empower People team, who will follow up using the contact details you've provided if more information is needed.</p>
+                </div>
+                <div id="submitError" class="alert hidden" role="alert" style="margin-top:var(--space-4)"></div>
+              </div>
+              <div class="actions">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-secondary" data-nav="prev">Back</button>
+                  <button type="button" class="btn btn-ghost" id="saveDraftReview">Save and Continue Later</button>
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Submit report</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="confirmationPanel" aria-live="polite">
+        <div class="panel-body">
+          <div class="section-title">
+            <h2>Thank you.</h2>
+            <p>Your report has been received successfully.</p>
+          </div>
+          <p style="margin-top:var(--space-4)">Your temporary Case Reference Number is:</p>
+          <p style="font-size:var(--text-lg);font-weight:700;color:var(--color-primary);margin-top:var(--space-2)" id="confirmationCase"></p>
+          <p style="margin-top:var(--space-4)">An Empower People team member will review the information and contact you if additional information is required.</p>
+          <div class="alert" style="margin-top:var(--space-4)">If this is an emergency or someone is in immediate danger, please contact your nearest Police Station or Dial 112.</div>
+        </div>
+      </section>
+
+      <p class="footer-note">Please save your Case Reference Number for future follow-up. This form is not monitored 24/7 — if someone is in immediate danger, contact the nearest Police Station or Dial 112.</p>
+    </main>
+  </div>
+
+  <div id="google_translate_element" class="sr-only" aria-hidden="true"></div>
+  <script>
+    // Language support uses Google Translate's no-key website widget. The selector
+    // is kept in the portal UI so people can choose a language before starting a form.
+    function googleTranslateElementInit(){
+      new google.translate.TranslateElement({ pageLanguage: 'en', autoDisplay: false }, 'google_translate_element');
+    }
+
+    (function setupLanguageSwitcher(){
+      const switcher = document.getElementById('languageSwitcher');
+      const savedLanguage = localStorage.getItem('ep-portal-language') || 'en';
+      switcher.value = switcher.querySelector(`option[value="${savedLanguage}"]`) ? savedLanguage : 'en';
+
+      function applyLanguage(language, attempts = 0){
+        const googleSwitcher = document.querySelector('.goog-te-combo');
+        if(!googleSwitcher){
+          if(attempts < 30) setTimeout(() => applyLanguage(language, attempts + 1), 250);
+          return;
+        }
+        googleSwitcher.value = language;
+        googleSwitcher.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      switcher.addEventListener('change', function(){
+        const language = this.value;
+        localStorage.setItem('ep-portal-language', language);
+        applyLanguage(language);
+      });
+
+      const translateScript = document.createElement('script');
+      translateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      translateScript.async = true;
+      document.head.appendChild(translateScript);
+      if(switcher.value !== 'en') applyLanguage(switcher.value);
+    })();
+
+    // ====== EMAIL DELIVERY SETUP (Google Apps Script — no third-party service) ======
+    // 1. Create a Google Sheet (e.g. "Empower People Portal Submissions")
+    // 2. Extensions → Apps Script → paste the Code.gs provided separately → Deploy → New deployment
+    //    → type "Web app" → Execute as "Me" → Who has access "Anyone" → Deploy
+    // 3. Copy the Web app URL it gives you and paste it below
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhmk1TkG4-07EA4_Iphi9dIB-96IPJMOsJYTCGKeba6ho-KIoOcm-xsFl8X-4nTi1oVw/exec';
+    const MAX_ATTACHMENT_MB = 20; // total across all files in one submission
+
+    const workflows = [
+      {id:'missing', title:'Report a Missing Person', icon:'MP', intro:'Capture identity, last seen details, risk indicators, police reporting, suspected persons, documents, and reporter details.'},
+      {id:'found', title:'Report a Found Person', icon:'FP', intro:'Record approximate identity, condition, communication ability, trafficking indicators, current placement, and reporter details.'},
+      {id:'reconnect', title:'I am a Survivor and Want Help Reconnecting with My Family', icon:'FR', intro:'Includes a supportive introduction, memory-based tracing details, safe contact preferences, and the type of help requested.'},
+      {id:'trafficking', title:'Report Suspected Human Trafficking', icon:'HT', intro:'Collect victim information, location, suspicion indicators, transport or marriage involvement, immediate danger, evidence, and reporter information.'},
+      {id:'marriage', title:'Report a Forced or Cross-Region Marriage Concern', icon:'FM', intro:'Collect girl’s details, marriage and destination information, broker details, payment, family awareness, risk, and supporting documents.'},
+      {id:'child', title:'Report a Child at Risk', icon:'CR', intro:'Capture child identity, guardian details, school and medical information, reason for concern, current location, risk, photos, and reporter details.'},
+      {id:'self', title:'Request Assistance for Myself', icon:'MY', intro:'Request personal support such as counselling, legal aid, medical care, shelter, livelihood, mental health, disability support, or other services.'},
+      {id:'update', title:'Submit Information About an Existing Case', icon:'EC', intro:'Submit updates using Case ID, location, notes, and document, photo, video, or audio uploads with reporter details.'}
+    ];
+
+    const forms = {
+      missing: `
+        <div class="fieldset"><legend>A. Information about the missing person</legend><div class="form-grid">
+          <div class="field half"><label class="required">Full Name</label><input name="missingFullName" required></div>
+          <div class="field half"><label>Nickname</label><input name="missingNickname"></div>
+          <div class="field third"><label>Gender</label><select name="missingGender"><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option><option>Prefer not to say</option></select></div>
+          <div class="field third"><label class="required">Approximate Age</label><input name="missingAge" required></div>
+          <div class="field third"><label>Date of Birth (optional)</label><input type="date" name="missingDob"></div>
+          <div class="field third"><label>Marital Status</label><input name="missingMarital"></div>
+          <div class="field third"><label>Nationality</label><input name="missingNationality"></div>
+          <div class="field third"><label>Occupation</label><input name="missingOccupation"></div>
+          <div class="field third"><label>Education</label><input name="missingEducation"></div>
+          <div class="field third"><label>Languages Spoken</label><input name="missingLanguages"></div>
+          <div class="field third"><label>Disability</label><input name="missingDisability"></div>
+          <div class="field third"><label>Medical Condition</label><input name="missingMedical"></div>
+          <div class="field half"><label>Photograph Upload</label><input type="file" name="missingPhoto" accept="image/*"></div>
+          <div class="field half"><label>Physical Description</label><input name="missingDescription"></div>
+          <div class="field third"><label>Height</label><input name="missingHeight"></div>
+          <div class="field third"><label>Build</label><input name="missingBuild"></div>
+          <div class="field third"><label>Hair Colour</label><input name="missingHair"></div>
+          <div class="field third"><label>Eye Colour</label><input name="missingEyes"></div>
+          <div class="field third"><label>Complexion</label><input name="missingComplexion"></div>
+          <div class="field third"><label>Identifying Marks</label><input name="missingMarks"></div>
+          <div class="field"><label>Clothing worn when last seen</label><textarea name="missingClothing"></textarea></div>
+          <div class="field half"><label>Jewellery</label><input name="missingJewellery"></div>
+          <div class="field half"><label>Mobile Number</label><input type="tel" name="missingMobile"></div>
+          <div class="field"><label>Social Media Accounts</label><textarea name="missingSocial"></textarea></div>
+        </div></div>
+        <div class="fieldset"><legend>B. Last Seen Information</legend><div class="form-grid">
+          <div class="field third"><label class="required">Date</label><input type="date" name="lastSeenDate" required></div>
+          <div class="field third"><label>Time</label><input type="time" name="lastSeenTime"></div>
+          <div class="field third"><label>Village</label><input name="lastSeenVillage"></div>
+          <div class="field half"><label>Police Station</label><input name="lastSeenPs"></div>
+          <div class="field half"><label>District</label><input name="lastSeenDistrict"></div>
+          <div class="field half"><label>State</label><input name="lastSeenState"></div>
+          <div class="field half"><label>Landmark</label><input name="lastSeenLandmark"></div>
+          <div class="field"><label>GPS Location (optional)</label><input name="lastSeenGps" placeholder="Latitude, Longitude or map pin"></div>
+          <div class="field half"><label>Who was with the missing person?</label><input name="withWhom"></div>
+          <div class="field half"><label>Where was the person going?</label><input name="goingWhere"></div>
+          <div class="field half"><label>Purpose of travel</label><input name="travelPurpose"></div>
+          <div class="field half"><label>Description of events</label><textarea name="eventDescription"></textarea></div>
+        </div></div>
+        <div class="fieldset"><legend>C. Risk Indicators</legend><div class="checkbox-grid">
+          ${['Under 18','Woman','Pregnant','Senior Citizen','Disability','Requires Medication','Victim of Domestic Violence','Cross-region Marriage','Interstate Marriage','Financial Distress','Previous Trafficking','Unknown'].map(v=>`<label class="check"><input type="checkbox" name="riskIndicators" value="${v}"><span>${v}</span></label>`).join('')}
+        </div></div>
+        <div class="fieldset"><legend>D. Suspected Person</legend><div class="choice-grid"><label class="choice"><input type="radio" name="suspectKnown" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="suspectKnown" value="No" checked><span>No</span></label></div>
+          <div id="suspectFields" class="form-grid hidden" style="margin-top:var(--space-4)">
+            <div class="field half"><label>Name</label><input name="suspectName"></div><div class="field half"><label>Relationship</label><input name="suspectRelationship"></div>
+            <div class="field half"><label>Phone</label><input name="suspectPhone"></div><div class="field half"><label>Address</label><input name="suspectAddress"></div>
+            <div class="field half"><label>Vehicle</label><input name="suspectVehicle"></div><div class="field half"><label>Photograph</label><input type="file" name="suspectPhoto" accept="image/*"></div>
+            <div class="field"><label>Reason for suspicion</label><textarea name="suspectReason"></textarea></div>
+          </div></div>
+        <div class="fieldset"><legend>E. Police Information</legend><div class="choice-grid"><label class="choice"><input type="radio" name="policeInformed" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="policeInformed" value="No" checked><span>No</span></label></div>
+          <div id="policeFields" class="form-grid hidden" style="margin-top:var(--space-4)">
+            <div class="field half"><label>Police Station</label><input name="policeStation"></div><div class="field half"><label>District</label><input name="policeDistrict"></div>
+            <div class="field third"><label>FIR Number</label><input name="firNumber"></div><div class="field third"><label>GD Number</label><input name="gdNumber"></div><div class="field third"><label>Investigating Officer</label><input name="ioName"></div>
+            <div class="field half"><label>Officer Phone</label><input name="ioPhone"></div><div class="field half"><label>Upload FIR</label><input type="file" name="firUpload"></div>
+          </div></div>
+        <div class="fieldset"><legend>G. Upload Documents</legend><div class="form-grid">
+          <div class="field half"><label>Photographs</label><input type="file" name="uploadPhotos" multiple accept="image/*"></div>
+          <div class="field half"><label>FIR</label><input type="file" name="uploadFir"></div>
+          <div class="field half"><label>Identity Documents</label><input type="file" name="uploadId" multiple></div>
+          <div class="field half"><label>Medical Records</label><input type="file" name="uploadMedical" multiple></div>
+          <div class="field"><label>Other Documents</label><input type="file" name="uploadOther" multiple></div>
+        </div></div>`,
+      found: `<div class="form-grid">
+        <div class="field half"><label class="required">Approximate Name</label><input name="foundName" required></div>
+        <div class="field half"><label class="required">Approximate Age</label><input name="foundAge" required></div>
+        <div class="field half"><label>Gender</label><select name="foundGender"><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option></select></div>
+        <div class="field half"><label class="required">Current Location</label><input name="foundLocation" required></div>
+        <div class="field half"><label>Photograph</label><input type="file" name="foundPhoto" accept="image/*"></div>
+        <div class="field half"><label>Physical Description</label><input name="foundDescription"></div>
+        <div class="field half"><label>Medical Condition</label><input name="foundMedical"></div>
+        <div class="field half"><label>Can the person communicate?</label><select name="foundCommunicate"><option value="">Select</option><option>Yes</option><option>No</option><option>Partially</option></select></div>
+        <div class="field half"><label>Language spoken</label><input name="foundLanguage"></div>
+        <div class="field half"><label>Appears distressed?</label><select name="foundDistressed"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        <div class="field third"><label>Appears injured?</label><select name="foundInjured"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        <div class="field third"><label>Appears trafficked?</label><select name="foundTrafficked"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Police informed?</label><select name="foundPolice"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        <div class="field half"><label>Current placement</label><select name="foundPlacement"><option value="">Select</option><option>Hospital</option><option>Police</option><option>Shelter</option><option>Home</option></select></div>
+      </div>`,
+      reconnect: `<div class="intro-note"><p><strong>You are not alone.</strong> Empower People may assist in tracing family members where appropriate and safe. Share only what you remember and tell us how and when it is safe to contact you.</p></div><div class="form-grid" style="margin-top:var(--space-5)">
+        <div class="field half"><label class="required">Current Name</label><input name="currentName" required></div>
+        <div class="field half"><label>Birth Name</label><input name="birthName"></div>
+        <div class="field third"><label class="required">Approximate Age</label><input name="reconnectAge" required></div>
+        <div class="field third"><label>Current State</label><input name="currentState"></div>
+        <div class="field third"><label>Current District</label><input name="currentDistrict"></div>
+        <div class="field third"><label>Original State</label><input name="originalState"></div>
+        <div class="field third"><label>Original District</label><input name="originalDistrict"></div>
+        <div class="field third"><label>Village remembered</label><input name="villageRemembered"></div>
+        <div class="field half"><label>Parents' Names</label><input name="parentsNames"></div>
+        <div class="field half"><label>Sibling Names</label><input name="siblingsNames"></div>
+        <div class="field half"><label>School remembered</label><input name="schoolRemembered"></div>
+        <div class="field half"><label>Temple / Mosque / Church</label><input name="faithLandmark"></div>
+        <div class="field"><label>Landmarks remembered</label><textarea name="landmarksRemembered"></textarea></div>
+        <div class="field half"><label>Language spoken</label><input name="reconnectLanguage"></div>
+        <div class="field half"><label>Photograph</label><input type="file" name="reconnectPhoto" accept="image/*"></div>
+        <div class="field half"><label>Phone</label><input type="tel" name="reconnectPhone"></div>
+        <div class="field half"><label>Safe time to contact</label><input name="safeTime"></div>
+        <div class="field half"><label>Preferred contact method</label><input name="reconnectContactMethod"></div>
+        <div class="field half"><label>Type of help needed</label><div class="checkbox-grid">${['Family tracing','Counselling','Identity documents','Livelihood','Legal Aid','Medical','Disability Support','Other'].map(v=>`<label class="check"><input type="checkbox" name="helpNeeded" value="${v}"><span>${v}</span></label>`).join('')}</div></div>
+      </div>`,
+      trafficking: `<div class="form-grid">
+        <div class="field half"><label class="required">Victim information</label><textarea name="victimInfo" required></textarea></div>
+        <div class="field half"><label class="required">Location</label><textarea name="trafficLocation" required></textarea></div>
+        <div class="field"><label class="required">Reason for suspicion</label><textarea name="trafficReason" required></textarea></div>
+        <div class="field third"><label>Marriage involved?</label><select name="trafficMarriage"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Employment involved?</label><select name="trafficEmployment"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Child involved?</label><select name="trafficChild"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Money exchanged?</label><select name="trafficMoney"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Travel to another state?</label><select name="trafficTravel"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Immediate danger?</label><select name="trafficDanger"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        <div class="field half"><label>Suspected traffickers</label><textarea name="traffickers"></textarea></div>
+        <div class="field half"><label>Photographs</label><input type="file" name="trafficPhotos" multiple accept="image/*"></div>
+        <div class="field"><label>Evidence Upload</label><input type="file" name="trafficEvidence" multiple></div>
+      </div>`,
+      marriage: `<div class="form-grid">
+        <div class="field half"><label class="required">Girl's details</label><textarea name="girlDetails" required></textarea></div>
+        <div class="field half"><label class="required">Age</label><input name="girlAge" required></div>
+        <div class="field third"><label>Current location</label><input name="girlLocation"></div>
+        <div class="field third"><label>Marriage location</label><input name="marriageLocation"></div>
+        <div class="field third"><label>Destination State</label><input name="destinationState"></div>
+        <div class="field half"><label>Destination District</label><input name="destinationDistrict"></div>
+        <div class="field half"><label>Marriage broker</label><input name="marriageBroker"></div>
+        <div class="field third"><label>Payment involved</label><select name="paymentInvolved"><option value="">Select</option><option>Yes</option><option>No</option><option>Unsure</option></select></div>
+        <div class="field third"><label>Family informed?</label><select name="familyInformed"><option value="">Select</option><option>Yes</option><option>No</option><option>Partially</option></select></div>
+        <div class="field third"><label>Immediate risk</label><select name="marriageRisk"><option value="">Select</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+        <div class="field"><label>Supporting documents</label><input type="file" name="marriageDocs" multiple></div>
+      </div>`,
+      child: `<div class="form-grid">
+        <div class="field half"><label class="required">Child Information</label><textarea name="childInfo" required></textarea></div>
+        <div class="field half"><label>Guardian</label><input name="childGuardian"></div>
+        <div class="field"><label class="required">Reason for concern</label><textarea name="childConcern" required></textarea></div>
+        <div class="field half"><label>Current location</label><input name="childLocation"></div>
+        <div class="field half"><label>School</label><input name="childSchool"></div>
+        <div class="field half"><label>Medical condition</label><input name="childMedical"></div>
+        <div class="field half"><label>Police informed</label><select name="childPolice"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+        <div class="field half"><label>Immediate risk</label><select name="childRisk"><option value="">Select</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+        <div class="field half"><label>Photographs</label><input type="file" name="childPhoto" multiple accept="image/*"></div>
+      </div>`,
+      self: `<div class="form-grid">
+        <div class="field half"><label class="required">Name</label><input name="selfName" required></div>
+        <div class="field third"><label class="required">Age</label><input name="selfAge" required></div>
+        <div class="field third"><label>Gender</label><select name="selfGender"><option value="">Select</option><option>Female</option><option>Male</option><option>Other</option></select></div>
+        <div class="field third"><label class="required">Location</label><input name="selfLocation" required></div>
+        <div class="field half"><label>Phone</label><input type="tel" name="selfPhone"></div>
+        <div class="field"><label>Type of assistance required</label><div class="checkbox-grid">${['Counselling','Legal Aid','Medical','Shelter','Livelihood','Identity documents','Government schemes','Mental health','Disability','Other'].map(v=>`<label class="check"><input type="checkbox" name="selfHelp" value="${v}"><span>${v}</span></label>`).join('')}</div></div>
+        <div class="field"><label>Brief description</label><textarea name="selfDescription"></textarea></div>
+      </div>`,
+      update: `<div class="form-grid">
+        <div class="field half"><label class="required">Case ID</label><input name="existingCaseId" required></div>
+        <div class="field half"><label>Name</label><input name="existingName"></div>
+        <div class="field"><label class="required">Information you wish to provide</label><textarea name="existingInfo" required></textarea></div>
+        <div class="field half"><label>Location</label><input name="existingLocation"></div>
+        <div class="field half"><label>Upload documents</label><input type="file" name="existingDocs" multiple></div>
+        <div class="field third"><label>Photo</label><input type="file" name="existingPhoto" accept="image/*"></div>
+        <div class="field third"><label>Video</label><input type="file" name="existingVideo" accept="video/*"></div>
+        <div class="field third"><label>Audio</label><input type="file" name="existingAudio" accept="audio/*"></div>
+      </div>`
+    };
+
+    const cardsWrap = document.getElementById('workflowCards');
+    const workflowContainer = document.getElementById('workflowContainer');
+    const workflowName = document.getElementById('workflowName');
+    const detailsHeading = document.getElementById('detailsHeading');
+    const detailsIntro = document.getElementById('detailsIntro');
+    const caseStatus = document.getElementById('caseStatus');
+    const confirmationPanel = document.getElementById('confirmationPanel');
+    const confirmationCase = document.getElementById('confirmationCase');
+    const form = document.getElementById('portalForm');
+    const stepBlocks = [...document.querySelectorAll('.section-block')];
+    const pills = [...document.querySelectorAll('[data-step-pill]')];
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const reviewSummary = document.getElementById('reviewSummary');
+    const submissionDate = document.getElementById('submissionDate');
+    const signatureName = document.getElementById('signatureName');
+    const signaturePreview = document.getElementById('signaturePreview');
+
+    let currentStep = 1;
+    let selectedWorkflow = null;
+    let caseId = generateCaseId();
+    submissionDate.value = new Date().toISOString().split('T')[0];
+    caseStatus.textContent = caseId;
+
+    workflows.forEach((item, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'card-option';
+      btn.dataset.workflow = item.id;
+      btn.style.setProperty('--card-accent', `var(--accent-${(i % 8) + 1})`);
+      btn.innerHTML = `<span class="icon" aria-hidden="true">${item.icon}</span><div><strong>${item.title}</strong><p class="muted small" style="margin-top:var(--space-2)">${item.intro}</p></div>`;
+      btn.addEventListener('click', () => selectWorkflow(item.id));
+      cardsWrap.appendChild(btn);
+    });
+
+    function generateCaseId(){
+      const stamp = Date.now().toString().slice(-6);
+      const rand = Math.random().toString(36).slice(2,6).toUpperCase();
+      return `EP-${new Date().getFullYear()}-${stamp}-${rand}`;
+    }
+
+    function selectWorkflow(id){
+      selectedWorkflow = workflows.find(w => w.id === id);
+      document.querySelectorAll('.card-option').forEach(c => c.classList.toggle('selected', c.dataset.workflow === id));
+      workflowName.textContent = selectedWorkflow.title;
+      detailsHeading.textContent = selectedWorkflow.title;
+      detailsIntro.textContent = selectedWorkflow.intro;
+      workflowContainer.innerHTML = forms[id] || '';
+      bindConditionalLogic();
+    }
+
+    function bindConditionalLogic(){
+      const suspectRadios = document.querySelectorAll('input[name="suspectKnown"]');
+      suspectRadios.forEach(r => r.addEventListener('change', () => {
+        const yes = document.querySelector('input[name="suspectKnown"]:checked')?.value === 'Yes';
+        document.getElementById('suspectFields')?.classList.toggle('hidden', !yes);
+      }));
+      const policeRadios = document.querySelectorAll('input[name="policeInformed"]');
+      policeRadios.forEach(r => r.addEventListener('change', () => {
+        const yes = document.querySelector('input[name="policeInformed"]:checked')?.value === 'Yes';
+        document.getElementById('policeFields')?.classList.toggle('hidden', !yes);
+      }));
+    }
+
+    function setStep(step){
+      currentStep = step;
+      stepBlocks.forEach(block => block.classList.toggle('active', Number(block.dataset.step) === step));
+      pills.forEach(p => p.classList.toggle('active', Number(p.dataset.stepPill) === step));
+      progressText.textContent = `Step ${step} of 4`;
+      progressFill.style.width = `${step * 25}%`;
+      if(step === 4) buildReview();
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function validateCurrentStep(){
+      if(currentStep === 1 && !selectedWorkflow){ alert('Please choose a workflow to continue.'); return false; }
+      const active = document.querySelector(`.section-block[data-step="${currentStep}"]`);
+      const required = [...active.querySelectorAll('[required]')];
+      for(const field of required){
+        if((field.type === 'checkbox' && !field.checked) || (field.type !== 'checkbox' && !field.value.trim())){ field.reportValidity(); return false; }
+      }
+      return true;
+    }
+
+    function formDataToObject(){
+      const fd = new FormData(form);
+      const out = {caseId, workflow:selectedWorkflow?.title || '', submittedAt:new Date().toLocaleString()};
+      for(const [key,val] of fd.entries()){
+        if(val instanceof File){
+          if(val.name){
+            if(!out[key]) out[key] = [];
+            out[key].push(val.name);
+          }
+        } else {
+          if(out[key]){
+            if(Array.isArray(out[key])) out[key].push(val);
+            else out[key] = [out[key], val];
+          } else out[key] = val;
+        }
+      }
+      return out;
+    }
+
+    function buildReview(){
+      const data = formDataToObject();
+      const risk = data.riskIndicators ? (Array.isArray(data.riskIndicators) ? data.riskIndicators.join(', ') : data.riskIndicators) : 'None selected';
+      reviewSummary.innerHTML = `
+        <div class="form-grid">
+          <div class="field half"><strong>Case ID</strong><span class="muted">${data.caseId}</span></div>
+          <div class="field half"><strong>Workflow selected</strong><span class="muted">${data.workflow || 'Not selected'}</span></div>
+          <div class="field half"><strong>Date and time</strong><span class="muted">${data.submittedAt}</span></div>
+          <div class="field half"><strong>Reporter contact</strong><span class="muted">${data.reporterPhone || 'Not provided'} / ${data.reporterEmail || 'No email'}</span></div>
+          <div class="field"><strong>Risk indicators</strong><span class="muted">${risk}</span></div>
+          <div class="field"><strong>Submission snapshot</strong><span class="muted tiny">${Object.entries(data).slice(0,14).map(([k,v]) => `<div><strong>${k}</strong>: ${Array.isArray(v) ? v.join(', ') : (v || '—')}</div>`).join('')}</span></div>
+        </div>`;
+    }
+
+    function saveDraft(){
+      const data = formDataToObject();
+      window.__portalDraft = data;
+      alert('Your progress has been saved on this device for this session. If you close or reload the page, you may need to start again.');
+    }
+
+    document.getElementById('toDetails').addEventListener('click', () => { if(validateCurrentStep()) setStep(2); });
+    document.querySelectorAll('[data-nav="next"]').forEach(btn => btn.addEventListener('click', () => { if(validateCurrentStep()) setStep(Math.min(4,currentStep+1)); }));
+    document.querySelectorAll('[data-nav="prev"]').forEach(btn => btn.addEventListener('click', () => setStep(Math.max(1,currentStep-1))));
+    ['saveDraftTop','saveDraftMid','saveDraftBottom','saveDraftReview'].forEach(id => document.getElementById(id)?.addEventListener('click', saveDraft));
+    signatureName.addEventListener('input', e => signaturePreview.textContent = e.target.value);
+
+    const submitBtn = document.getElementById('submitBtn');
+    const submitError = document.getElementById('submitError');
+
+    function fileToBase64(file){
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function collectFiles(){
+      const fileInputs = [...form.querySelectorAll('input[type="file"]')];
+      let totalBytes = 0;
+      const files = [];
+      for(const input of fileInputs){
+        for(const file of input.files){
+          totalBytes += file.size;
+          files.push({ fieldName: input.name, filename: file.name, mimeType: file.type || 'application/octet-stream', base64: await fileToBase64(file) });
+        }
+      }
+      return { files, totalMB: totalBytes / (1024*1024) };
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if(!validateCurrentStep()) return;
+
+      if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.startsWith('PASTE-')){
+        submitError.textContent = 'This form isn\'t able to submit right now. Please contact the site administrator, or if this is urgent, email post@empowerpeople.in directly.';
+        submitError.classList.remove('hidden');
+        return;
+      }
+
+      submitError.classList.add('hidden');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Preparing files…';
+
+      try{
+        const { files, totalMB } = await collectFiles();
+        if(totalMB > MAX_ATTACHMENT_MB){
+          throw new Error(`Attachments total ${totalMB.toFixed(1)}MB, which is over the ${MAX_ATTACHMENT_MB}MB limit. Please remove or compress some files.`);
+        }
+
+        const fields = formDataToObject();
+        submitBtn.textContent = 'Submitting…';
+
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight
+          body: JSON.stringify({ caseId, fields, files })
+        });
+        const result = await response.json();
+
+        if(result.success){
+          confirmationCase.textContent = caseId;
+          form.closest('.panel').classList.add('hidden');
+          confirmationPanel.classList.remove('hidden');
+          window.scrollTo({top:0, behavior:'smooth'});
+        } else {
+          throw new Error(result.message || 'Delivery failed');
+        }
+      } catch(err){
+        submitError.innerHTML = `We could not send this report automatically (${err.message}). Please try again, or if this is urgent, email <a href="mailto:post@empowerpeople.in">post@empowerpeople.in</a> directly with Case ID <strong>${caseId}</strong>.`;
+        submitError.classList.remove('hidden');
+        submitError.scrollIntoView({behavior:'smooth', block:'center'});
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit report';
+      }
+    });
+
+    document.querySelector('[data-theme-toggle]').addEventListener('click', function(){
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      this.setAttribute('aria-label', `Switch to ${next === 'dark' ? 'light' : 'dark'} mode`);
+      this.innerHTML = next === 'dark'
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    });
+
+    const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(systemDark) document.documentElement.setAttribute('data-theme','dark');
+
+    // ====== WIX EMBED AUTO-HEIGHT ======
+    // Wix's HTML iFrame element has a fixed height set in the editor. This posts the
+    // content's real height to the parent page so a small Velo snippet (see the
+    // deployment notes) can resize the embed automatically. Safe to leave in even
+    // if the Velo snippet isn't added — it just won't do anything without it.
+    function postHeightToWix(){
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: 'ep-portal-resize', height }, '*');
+    }
+    new ResizeObserver(postHeightToWix).observe(document.body);
+    window.addEventListener('load', postHeightToWix);
+  </script>
+</body>
+</html>
